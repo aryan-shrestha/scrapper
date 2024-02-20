@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load group_tags %}
+
+{% block title %}
+{{ group.name }}
+{% endblock %}
+
+{% block content %}
+<div class="card mb-4 o-hidden">
+    <div class="card-body">
+        <form method="POST">
+            {% include 'message.html' %}
+            {% csrf_token %}
+            <div class="col">
+                <div class="row form-group mb-3">
+                    <label for="group_name">Group Name</label>
+                    <input class="form-control" id="group_name" type="text" value="{{ group.name }}" required>
+                </div>
+                <div class="col form-group mb-3">
+                    {% for permission in permissions %}
+                    <div class="row mb-3">
+                        <label class="checkbox checkbox-outline-primary">
+                            <input type="checkbox" value="{{ permission.id }}" {% if group.name|group_has_permission:permission.id  %} checked="checked" {% endif %} name="permissions"><span>{{ permission.name }}</span><span class="checkmark"></span>
+                        </label>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div>
+                    <button class="btn btn-outline-success" type="submit">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ post.title }}
+{% endblock %}
+
+{% block content %}
+<div class="card mb-4 o-hidden">
+    <div class="card-body">
+        <div class="card-body">
+            {% include 'message.html' %}
+            <form method="POST" >
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6 form-group mb-3">
+                        <label for="firstName1">First name</label>
+                        <input class="form-control" id="firstName1" type="text" name="first_name" value="{{ user.first_name }}">
+                    </div>
+                    <div class="col-md-6 form-group mb-3">
+                        <label for="lastName1">Last name</label>
+                        <input class="form-control" id="lastName1" type="text" name="last_name" value="{{ user.last_name }}">
+                    </div>
+                    <div class="col-md-6 form-group mb-3">
+                        <label for="email_input">Email address</label>
+                        <input class="form-control" id="email_input" type="email" value="{{ user.email }}" readonly name="email">
+                        <!--  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                    </div>
+                    <div class="col-md-6 form-group mb-3">
+                        <label for="phone">Phone</label>
+                        <input class="form-control" id="phone" value="{{ user.phone_number }}" name="phone_number">
+                    </div>
+                    <div class="col-md-6 form-group mb-3">
+                        <label for="username">Username</label>
+                        <input class="form-control" id="username" value="{{ user.username }}" name="username" readonly>
+                    </div>
+
+                    <!-- <div class="col-md-6 form-group mb-3">
+                        <label for="picker1">Group</label>
+                        <select class="form-control" name="group">
+                            {% for group in groups  %}
+                            {% if group.id == user.groups.first.id %}
+                            <option value="{{ group.id }}" selected>{{ group.name }}</option>
+                            {% else %}
+                            <option value="{{ group.id }}">{{ group.name }}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div> -->
+                    <div class="col-md-12 form-group mb-3">
+                        <div name="group">
+                            <label for="">Groups</label>
+                            {% for group in groups %}
+                                {% if group in user.groups.all %}
+                                <label class="checkbox checkbox-outline-primary">
+                                    <input type="checkbox" value="{{ group.id }}" checked name="group"><span>{{ group.name }}</span><span class="checkmark"></span>
+                                </label>
+                                {% else %}
+                                <label class="checkbox checkbox-outline-primary">
+                                    <input type="checkbox" value="{{ group.id }}" name="group"><span>{{ group.name }}</span><span class="checkmark"></span>
+                                </label>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <button class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>  
+</div>
+
+{% endblock %}

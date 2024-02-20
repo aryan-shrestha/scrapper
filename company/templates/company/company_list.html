@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title %} Company | List {%endblock %}
+{% block content %}
+<div class="card text-left">
+    <div class="card-body">
+        <div style="display:flex; justify-content: space-between; align-items: center;">
+            <h4 class="card-title mb-3">Company list</h4>
+            <a href="{% url 'company:company_create' %}" class="btn btn-outline-primary">Add</a>
+        </div>
+        <p>Below are the list of companies</p>
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-info" role="alert">
+            <strong class="text-capitalize">Message!</strong> {{ message }}.
+            <button class="close" type="button" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Symbol</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for company in company_list %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{ company.name }}</td>
+                        <td>{{ company.symbol }}</td>
+                        <td>{{ company.email }}</td>
+                        <td>{{ company.phone }}</td>
+                        <td>
+                            
+                            <a class="btn btn-sm btn-outline-success mr-2"
+                                href="{% url 'scrapper:company_detail_admin' company.id %}">
+                                View
+                            </a>
+                            <a class="btn btn-sm btn-outline-primary mr-2"
+                                href="{% url 'company:company_update' company.id %}">
+                                Update
+                            </a>
+                            <a class="btn btn-sm btn-outline-danger mr-2"
+                                href="{% url 'company:company_delete' company.id %}">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

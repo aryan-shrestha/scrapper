@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+User | List
+{% endblock %}
+
+{% block content %}
+
+<div class="row mb-4">
+    <div class="col-md-12 mb-4">
+        <div class="card text-left">
+            <div class="card-body">
+                {% include 'message.html' %}
+                <h4 class="card-title mb-3">User List</h4>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Full name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Username</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                            <tr>
+                                <th scope="row">{{ forloop.counter }}</th>
+                                <td>{{ user.full_name }}</td>
+                                <td>{{ user.email }} </td>
+                                <td>{{ user.username }}</td>
+                                <td>
+                                    <a class="text-primary mr-2" href="#">
+                                    </a>
+                                    <a class="text-success mr-2" href="{% url 'account:user_update' user.id %}">
+                                        <i class="nav-icon i-Eye font-weight-bold"></i>
+                                    </a>
+                                    <a class="text-danger mr-2" href="{% url 'account:user_delete' user.id %}">
+                                        <i class="nav-icon i-Close-Window font-weight-bold"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end of col-->
+</div>
+{% endblock %}

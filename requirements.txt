@@ -1,0 +1,9 @@
+beautifulsoup4==4.12.3
+django==5.0.2
+pillow==10.2.0
+pip-chill==1.0.3
+psycopg2==2.9.9
+psycopg2-binary==2.9.9
+pysocks==1.7.1
+requests==2.31.0
+selenium==4.17.2

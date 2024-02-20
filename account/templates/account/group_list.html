@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-12 mb-4">
+        <div class="card text-left">
+            <div class="card-body">
+                {% include 'message.html' %}
+                <div class="mb-4" style="display: flex; align-items: center; justify-content: space-between;">
+                    <h4 class="card-title mb-3">Roles</h4>
+                    <a href="{% url 'account:group_create' %}" class="btn btn-outline-primary">Add new role</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Role</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for group in groups %}
+                            <tr>
+                                <th scope="row">{{ forloop.counter }}</th>
+                                <td>{{ group.name }}</td>
+                                <td style="display: flex; align-items: center;">
+                                    <a href="{% url 'account:group_update' group.id %}" class="btn btn-sm btn-outline-primary mr-2">
+                                        Update
+                                    </a>
+                                    <a href="{% url 'account:group_delete' group.id %}" class="btn btn-sm btn-outline-danger mr-2">
+                                        Delete
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end of col-->
+</div>
+{% endblock %}

@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+
+{% block title %} Company | Update {% endblock %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-body">
+        <div class="card-title mb-3">Update Company</div>
+        <form action="{% url 'company:company_update' company.id %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-info" role="alert">
+                <strong class="text-capitalize">Info: </strong> {{ message }}.
+                <button class="close" type="button" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% if form.errors %}
+            {% for error in form.errors %}
+            <div class="alert alert-danger" role="alert">
+                <strong class="text-capitalize">Error!</strong> {{ error }}.
+                <button class="close" type="button" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            {% endfor %}
+            {% endif %}
+            <div class="row">
+                {% for field in form %}
+                <div class="col-md-6 form-group mb-3">
+                    {{ field.label_tag }}
+                    {{ field }}
+                </div>
+                {% endfor %}
+            </div>
+            <button type="submit" class="btn btn-outline-success">Save</button>
+        </form>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <div class="card-title mb-3">Update Company url</div>
+        <form action="{% url 'company:update_company_url' company.urls.id %}" method="POST">
+            {% csrf_token %}
+            <div class="row">
+                {% for field in company_url_form %}
+                <div class="col-md-6 form-group mb-3">
+                    {{ field.label_tag }}
+                    {{ field }}
+                </div>
+                {% endfor %}
+            </div>
+            <button type="submit" class="btn btn-outline-success">Save</button>
+        </form>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-body" style="display: flex; align-items: center; justify-content: space-between;">
+        <div class="card-title mb-3">Board of directors</div>
+        <a href="{% url 'company:board_of_director_create' %}" class="btn btn-outline-primary">Add</a>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Designation</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for member in company.board_of_director.all %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td scope="row">{{ member.name }}</td>
+                        <td scope="row">{{ member.designation }}</td>
+                        <td>
+                            <a href="{% url 'company:board_of_director_update' member.id %}"
+                                class="btn btn-sm btn-outline-primary">Update</a>
+                            <a href="{% url 'company:board_of_director_delete' member.id %}"
+                                class="btn btn-sm btn-outline-danger">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-body" style="display: flex; align-items: center; justify-content: space-between;">
+        <div class="card-title mb-3">Floorsheet</div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Updated at</th>
+                        <th scope="col">Source</th>
+                        <th scope="col">LTD</th>
+                        <th scope="col">Open price</th>
+                        <th scope="col">Close price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for data in floorsheet %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td scope="row">{{ data.updated_at }}</td>
+                        <td scope="row">{{ data.last_scrapped_from }}</td>
+                        <td scope="row">{{ data.last_traded_price }}</td>
+                        <td scope="row">{{ data.open_price }}</td>
+                        <td scope="row">{{ data.close_price }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-body" style="display: flex; align-items: center; justify-content: space-between;">
+        <div class="card-title mb-3">Graph</div>
+    </div>
+    <div class="card-body">
+        <canvas id="totalTradedPriceChart" width="400" height="120"></canvas>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    fetch('/company/chart/data/{{ company.id }}/')
+        .then(response => response.json())
+        .then(data => {
+            var ctx = document.getElementById('totalTradedPriceChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: 'Last Traded Price',
+                        data: data.last_traded_price,
+                        borderColor: '{{ company.primary_color }}',
+                        borderWidth: 2,
+                        fill: false,
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Last traded price'
+                            }
+                        },
+                        responsive: true,
+                        maintainAspectRatio: true,
+                    }
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

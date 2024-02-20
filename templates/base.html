@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>{% block title %} {% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700,800,900" rel="stylesheet" />
+    <link href="{% static 'css/themes/lite-purple.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/plugins/perfect-scrollbar.min.css' %}" rel="stylesheet" />
+</head>
+
+<body class="text-left">
+    <div class="app-admin-wrap layout-sidebar-large">
+        {% include 'navbar.html' %}
+        {% include 'sidebar.html' %}
+
+        <div class="main-content-wrap d-flex flex-column sidenav-open">
+            <div class="main-content">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'js/plugins/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/plugins/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/plugins/perfect-scrollbar.min.js' %}"></script>
+    <script src="{% static 'js/scripts/script.min.js' %}"></script>
+    <script src="{% static 'js/scripts/sidebar.large.script.min.js' %}"></script>
+    <script src="{% static 'js/plugins/echarts.min.js' %}"></script>
+    <script src="{% static 'js/scripts/echart.options.min.js' %}"></script>
+    <script src="{% static 'js/scripts/dashboard.v1.script.min.js' %}"></script>
+    <script src="{% static 'js/scripts/customizer.script.min.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    {% block js %}
+    {% endblock %}
+</body>
+
+</html>

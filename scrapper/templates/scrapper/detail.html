@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load group_tags %}
+
+{% block title %}
+{% if company %}
+{{ company.name }}
+{% else %}
+company | detail
+{% endif %}
+{% endblock %}
+
+{% block content %}
+
+<div class="card text-left">
+    <div class="card-body">
+        {% include 'message.html' %}
+        {% if company %}
+        <div class="mb-4" style="display: flex; align-items: center; justify-content: space-between;">
+            <h4 class="card-title mb-3">{{ company.name }}</h4>
+            {% if request.user|user_in_groups:"super admin, super editor, company admin" %}
+            <a href="{% url 'company:company_update' company.id %}" class="btn btn-outline-primary">Update</a>
+            {% endif %}
+        </div>
+        <div class="mb-4" style="display: flex; align-items: center; gap: 16px">
+            <form action="{% url 'scrapper:scrap_from_nepse' company.id %}" method="POST" style="display:inline">
+                {% csrf_token %}
+                <button class="btn btn-outline-primary">Nepse</button>
+            </form>
+            <form action="{% url 'scrapper:scrap_from_share_sansar' company.id %}" method="POST" style="display:inline">
+                {% csrf_token %}
+                <button class="btn btn-outline-primary">Share sansar</button>
+            </form>
+            <form action="{% url 'scrapper:scrap_from_mero_lagani' company.id %}" method="POST" style="display:inline">
+                {% csrf_token %}
+                <button class="btn btn-outline-primary">Mero lagani</button>
+            </form>
+        </div>
+        {% endif %}
+        {% if company_data is not None %}
+        <div class="table-responsive">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th scope="row">Last Scrapped from: </th>
+                        <td>{{ company_data.last_scrapped_from }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Created at: </th>
+                        <td>{{ company_data.created_at|default:'-' }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Last updated: </th>
+                        <td>{{ company_data.updated_at|default:'-' }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Last traded price: </th>
+                        <td>{{ company_data.last_traded_price|default:'-' }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Total trades: </th>
+                        <td>{{ company_data.total_traded_quantity|default:'-' }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Previous day close price: </th>
+                        <td>{{ company_data.previous_day_close_price|default:'-' }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">High price/low price: </th>
+                        <td>{{ company_data.high_price_low_price|default:'-' }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">52 weeks high/low: </th>
+                        <td>{{ company_data.week_high_week_low|default:'-' }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Open price: </th>
+                        <td>{{ company_data.open_price|default:'-' }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Close price: </th>
+                        <td>{{ company_data.close_price|default:'-' }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Total listed shares: </th>
+                        <td>{{ company_data.total_listed_shares|default:'-' }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Total paid up value: </th>
+                        <td>{{ company_data.total_paid_up_value|default:'-' }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Market capitalization: </th>
+                        <td>{{ company_data.market_capitalization|default:'-' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

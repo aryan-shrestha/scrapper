@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Floorsheet | List
+{% endblock %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-body" style="display: flex; align-items: center; justify-content: space-between;">
+        <div class="card-title mb-3">Floorsheets</div>
+        <a href="{% url 'company:floorsheet_create' %}" class="btn btn-outline-primary">Add</a>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Company</th>
+                        <th scope="col">Buyer</th>
+                        <th scope="col">Seller</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Rate</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for floorsheet in floorsheets %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td scope="row">{{ floorsheet.company }}</td>
+                        <td scope="row">{{ floorsheet.buyer }}</td>
+                        <td scope="row">{{ floorsheet.seller }}</td>
+                        <td scope="row">{{ floorsheet.quantity }}</td>
+                        <td scope="row">{{ floorsheet.rate }}</td>
+                        <td scope="row">{{ floorsheet.amount }}</td>
+                        <td>
+                            <a href="{% url 'company:floorsheet_update' floorsheet.id %}"
+                                class="btn btn-sm btn-outline-primary">Update</a>
+                            <a href="{% url 'company:floorsheet_delete' floorsheet.id %}"
+                                class="btn btn-sm btn-outline-danger">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

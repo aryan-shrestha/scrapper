@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Category | Delete
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Delete confirmation</h5>
+        <p class="card-text">
+            Do you want to delete {{ category.name }}?
+        </p>
+
+        <a class="card-link btn btn-outline-success" href="{% url 'company:category_list' %}">Cancel</a>
+        <form method="POST" style="display: inline;" class="ml-2">
+            {% csrf_token %}
+            <button class="card-link btn btn-outline-danger" type="submit">Delete</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

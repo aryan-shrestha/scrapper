@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %} Group | Add {% endblock %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-body">
+        <div class="card-title mb-3">Add Group</div>
+        <form method="POST">
+            {% csrf_token %}
+            {% include 'message.html' %}
+            <div class="col">
+                <div class="row form-group mb-3">
+                    <label for="group_name">Group Name</label>
+                    <input class="form-control" id="group_name" type="text" name="group_name" required>
+                </div>
+                <div class="col form-group mb-3">
+                    {% for permission in permissions %}
+                    <div class="row mb-3">
+                        <label class="checkbox checkbox-outline-primary">
+                            <input type="checkbox" value="{{ permission.id }}" name="permissions">
+                                <span>{{ permission.name }}</span>
+                                <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <button type="submit" class="btn btn-outline-success">Submit</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
