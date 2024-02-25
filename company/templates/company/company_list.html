@@ -5,7 +5,14 @@
     <div class="card-body">
         <div style="display:flex; justify-content: space-between; align-items: center;">
             <h4 class="card-title mb-3">Company list</h4>
-            <a href="{% url 'company:company_create' %}" class="btn btn-outline-primary">Add</a>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+                <!-- <a href="{% url 'company:floorsheet_create' %}" class="btn btn-outline-primary">Add</a> -->
+                <form method="POST" style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-primary" name="pdf">Export as PDF</button>
+                    <button type="submit" class="btn btn-outline-primary" name="xls">Export as XLS</button>
+                </form>
+            </div>
         </div>
         <p>Below are the list of companies</p>
         {% if messages %}

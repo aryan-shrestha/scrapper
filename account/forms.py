@@ -6,7 +6,7 @@ from .models import Account
 class AccountCreationForm(UserCreationForm):
     class Meta:
         model = Account
-        fields = ['first_name', 'last_name', 'username', 'email', 'phone_number', 'password1', 'password2']
+        fields = ['first_name', 'last_name', 'username', 'email', 'phone_number', 'password1', 'password2', 'company', 'groups']
 
     def clean_email(self):
         email = self.cleaned_data['email'].lower()

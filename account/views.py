@@ -1,20 +1,90 @@
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate, get_user_model
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.postgres.search import SearchVector
+from django.core.exceptions import ObjectDoesNotExist
+from django.utils import timezone
 
-from company.models import Company, CompanyData
+from company.models import AGM, Company, CompanyData
 
+from .models import UserAGMInteraction, WatchList
 from .forms import AccountCreationForm, AccountUpdateForm, GroupForm
 from .decorators import user_in_groups
 
 # Create your views here.
 
+@login_required(login_url='account/login')
 def dashboard(request):
+    today = timezone.now().date()
+    search_keyword = request.GET.get('search')
+    context = {}
+    if search_keyword:
+        companies = Company.objects.annotate(
+            search=SearchVector('name', 'symbol'),
+        ).filter(search=search_keyword)
+        context['search_results'] = companies
+        context['search_keyword'] = search_keyword
+
+    watch_list_data=[]
+    agm_list = []
+    agm_notifications = []
+    try:
+        watch_list = WatchList.objects.get(user=request.user)
+    except WatchList.DoesNotExist:
+        watch_list = None
+    else:
+        for company in watch_list.companies.all():
+            agm = AGM.objects.filter(company=company, date__gte=today).order_by('date')
+            recent_data = CompanyData.objects.filter(company=company).order_by('-created_at').first()
+            watch_list_data.append(recent_data)
+            agm_list.extend(agm)
+
+        for agm in agm_list:
+            user_agm_interaction, created = UserAGMInteraction.objects.get_or_create(user=request.user, agm=agm)
+            agm_notifications.append(user_agm_interaction)
+
+        context['watch_list_data'] = watch_list_data
+        context['agm_notification_list'] = agm_notifications
+    context['watch_list'] = watch_list
+    return render(request, 'dashboard.html', context=context)
+
    
-    return render(request, 'empty.html')
-   
+def add_to_watchlist(request, company_id):
+    company = Company.objects.get(id=company_id)
+    try:
+        request.user.watchlist.companies.add(company)
+    except ObjectDoesNotExist:
+        watchlist = WatchList.objects.create(user=request.user)
+        watchlist.companies.add(company)
+
+    messages.success(request, f'{company.name} added to watchlist.')
+    return redirect('dashboard')
+
+def remove_from_watchlist(request, company_id):
+    company = Company.objects.get(id=company_id)
+
+    if request.method == 'POST':
+        watchlist = request.user.watchlist
+        watchlist.companies.remove(company)
+        messages.success(request, f'{company.name} removed from watch list.')
+        return redirect('dashboard')
+    
+    return render(request, 'account/watchlist_delete.html')
+
+def handle_agm_notification_action(request, agm_id):
+    agm = AGM.objects.get(id=agm_id)
+    
+    user_agm_interaction, created = UserAGMInteraction.objects.get_or_create(user=request.user, agm=agm)
+    
+    if request.method == 'POST':
+        if 'do_not_show_again' in request.POST:
+            user_agm_interaction.show_again = False
+        user_agm_interaction.save()
+    
+    return redirect('dashboard')
 
 @user_in_groups(['super admin'])
 def user_create_view(request):

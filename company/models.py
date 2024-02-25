@@ -1,5 +1,7 @@
 import os
 from django.db import models
+from django.utils.text import slugify
+from django.utils import timezone
 
 # Create your models here.
 def rename_image(instance, filename):
@@ -74,8 +76,8 @@ class CompanyData(models.Model):
     total_listed_shares = models.CharField(max_length=255, null=True, blank=True)
     total_paid_up_value = models.CharField(max_length=255, null=True, blank=True)
     market_capitalization = models.CharField(max_length=255, null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+    created_at = models.DateTimeField(null=True, blank=True)
+    updated_at = models.DateTimeField(null=True, blank=True)
     
     def __str__(self):
         return f'{self.company.name}'
@@ -107,4 +109,21 @@ class News(models.Model):
 
     def __str__(self):
         return f'{self.company.name}'
-    
+
+class AGM(models.Model):
+    company = models.ForeignKey(Company, null=True, blank=True, on_delete=models.CASCADE)
+    title = models.CharField(max_length=255, null=True, blank=True)
+    slug = models.SlugField(max_length=255, null=True, blank=True, unique=True)
+    description = models.CharField(max_length=500, null=True, blank=True)
+    file = models.FileField(max_length=255, upload_to='company/agm/', null=True, blank=True)
+    date = models.DateField(null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+            timestamp = timezone.now().strftime('%Y%m%d%H%M%S')
+            self.slug = f"{self.slug}-{timestamp}"
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f'{self.company.name}'

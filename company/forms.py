@@ -1,5 +1,5 @@
 from django import forms
-from .models import BoardOfDirector, Category, Company, CompanyUrls, Floorsheet, News
+from .models import AGM, BoardOfDirector, Category, Company, CompanyData, CompanyUrls, Floorsheet, News
 
 class CompanyForm(forms.ModelForm):
     class Meta:
@@ -14,6 +14,29 @@ class CompanyForm(forms.ModelForm):
         super(CompanyForm, self).__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
+
+class CompanyDataForm(forms.ModelForm):
+    SOURCES = [
+        ('', '---------'),
+        ('Nepse', 'Nepse'),
+        ('Share sansar', 'Share sansar'),
+        ('Mero lagani', 'Mero lagani'),
+    ]
+
+    last_scrapped_from = forms.ChoiceField(choices=SOURCES)
+    class Meta:
+        model = CompanyData
+        fields = '__all__'
+        widgets = {
+            'created_at': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+            'updated_at': forms.DateTimeInput(attrs={'type': 'datetime-local'}),        
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(CompanyDataForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+
 
 class CompanyUrlsForm(forms.ModelForm):
     class Meta:
@@ -66,6 +89,20 @@ class NewsForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(NewsForm, self).__init__(*args, **kwargs)
+        
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+
+class AGMForm(forms.ModelForm):
+    class Meta:
+        model = AGM
+        fields = ['company', 'title', 'description', 'file', 'date']
+        widgets = {
+            'date': forms.DateTimeInput(attrs={'type': 'date'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(AGMForm, self).__init__(*args, **kwargs)
         
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'

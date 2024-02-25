@@ -21,5 +21,11 @@ urlpatterns = [
     path('floorsheet/update/<int:floorsheet_id>/', views.floorsheet_update, name='floorsheet_update'),
     path('floorsheet/delete/<int:floorsheet_id>/', views.floorsheet_delete, name='floorsheet_delete'),
     path('market/today/', views.today_market, name='today_market'),
+    path('import/company/', views.import_company_data, name='import_company_data'),
     path('chart/data/<int:company_id>/', views.company_data_chart, name='company_data_chart'),
+    path('data/create', views.company_data_create, name='company_data_create'),
+    path('agm/list/', views.agm_list, name='agm_list'),
+    path('agm/create/', views.agm_create, name='agm_create'),
+    path('agm/update/<slug:agm_slug>/', views.agm_update, name='agm_update'),
+    path('agm/delete/<slug:agm_slug>/', views.agm_delete, name='agm_delete'),
 ]

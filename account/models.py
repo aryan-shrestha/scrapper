@@ -1,7 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Group, PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Group
+from django.contrib.auth import get_user_model
 
-from company.models import Company
+from company.models import AGM, Company
 
 # Create your models here.
 
@@ -76,4 +77,21 @@ class Account(AbstractBaseUser):
     @property
     def full_name(self):
         return f"{self.first_name} {self.last_name}"
+    
+
+class WatchList(models.Model):
+    user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE, null=True, blank=True)
+    companies = models.ManyToManyField(Company, related_name='companies')
+
+    def __str__(self):
+        return f'{self.user.email}'
+    
+
+class UserAGMInteraction(models.Model):
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=True, blank=True)
+    agm = models.ForeignKey(AGM, on_delete=models.CASCADE, null=True, blank=True)
+    show_again = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f'{self.user.email} - {self.agm.title}'
     

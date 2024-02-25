@@ -7,8 +7,27 @@ Floorsheet | Today
 {% block content %}
 <div class="card mb-4">
     <div class="card-body" style="display: flex; align-items: center; justify-content: space-between;">
-        <div class="card-title mb-3">Today's Floorsheet</div>
-        <a href="{% url 'company:floorsheet_create' %}" class="btn btn-outline-primary">Add</a>
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+            <!-- <a href="{% url 'company:floorsheet_create' %}" class="btn btn-outline-primary">Add</a> -->
+            <form action="{% url 'company:import_company_data' %}" method="POST" enctype="multipart/form-data" style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+                {% csrf_token %}
+                <input type="file" name="file">
+                <button type="submit" class="btn btn-outline-primary">Export as XLS</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="card mb-4">
+    <div class="card-body" style="display: flex; align-items: center; justify-content: space-between;">
+        <div class="card-title mb-3">Today's Market</div>
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+            <!-- <a href="{% url 'company:floorsheet_create' %}" class="btn btn-outline-primary">Add</a> -->
+            <form  method="POST" style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-primary" name="pdf">Export as PDF</button>
+                <button type="submit" class="btn btn-outline-primary" name="xls">Export as XLS</button>
+            </form>
+        </div>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -18,7 +37,7 @@ Floorsheet | Today
                         <th scope="col">#</th>
                         <th scope="col">Logo</th>
                         <th scope="col">Company</th>
-                        <th scope="col">LTD</th>
+                        <th scope="col">LTP</th>
                         <th scope="col">Last updated at</th>
                     </tr>
                 </thead>

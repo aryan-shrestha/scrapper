@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %} BOD | Add {% endblock %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-body">
+        <div class="card-title mb-3">Update AGM</div>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% include 'message.html' %}
+            {% if form.errors %}
+            {% for error in form.errors %}
+            <div class="alert alert-danger" role="alert">
+                <strong class="text-capitalize">Error!</strong> {{ error }}.
+                <button class="close" type="button" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            {% endfor %}
+            {% endif %}
+            <div class="row">
+                {% for field in form %}
+                <div class="col-md-6 form-group mb-3">
+                    {{ field.label_tag }}
+                    {{ field }}
+                </div>
+                {% endfor %}
+            </div>
+            <button type="submit" class="btn btn-outline-success">Submit</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %} Company | List {%endblock %}
+{% block content %}
+<div class="card text-left">
+    <div class="card-body">
+        <div class="mb-3" style="display:flex; justify-content: space-between; align-items: center;">
+            <h4 class="card-title mb-3">AGM list</h4>
+            <a href="{% url 'company:agm_create' %}" class="btn btn-outline-primary">Add</a>
+        </div>
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-info" role="alert">
+            <strong class="text-capitalize">Message!</strong> {{ message }}.
+            <button class="close" type="button" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">File</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for data in agm_list %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{ data.title }}</td>
+                        <td>{{ data.date }}</td>
+                        <td><a href="{{ data.file.url }}" target="_blank">{{ data.file.url }}</a></td>
+                        <td>
+                            <a href="{% url 'company:agm_update' data.slug %}" class="btn btn-sm btn-outline-primary mr-2">Update</a>
+                            <a href="{% url 'company:agm_delete' data.slug %}" class="btn btn-sm btn-outline-danger mr-2">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

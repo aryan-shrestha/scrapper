@@ -1,5 +1,6 @@
 import requests
 
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.utils import timezone
@@ -12,25 +13,43 @@ from selenium.common.exceptions import InvalidArgumentException
 from selenium.webdriver.support import expected_conditions as EC
 
 from company.models import CompanyData, Company
+from scrapper.admin import CompanyDataResource
 from .utils import list_to_dict
 
 # Create your views here.
 
+def filter_company_data_by_date(company, start_date, end_date):
+    company_data = CompanyData.objects.filter(company=company, created_at__date__range=[start_date, end_date])
+    return company_data
+
 def company_detail_admin(request, company_id):
     today = timezone.now().date()
-    context = {}
+    context = {
+        'today': today.strftime('%Y-%m-%d'),
+    }
     try:
         company = Company.objects.get(id=company_id)
-        company_data = CompanyData.objects.get(company=company, created_at__date=today)
+        today_company_data = CompanyData.objects.get(company=company, created_at__date=today)
     except Company.DoesNotExist:
         company = None
         messages.success(request, "Company does not exists")
     except CompanyData.DoesNotExist:
-        company_data = None
+        today_company_data = None
         messages.error(request, "No data found")
     finally:
         context['company'] = company
-        context['company_data'] = company_data
+        context['company_data'] = today_company_data
+
+    start_date = request.GET.get('start_date')
+    end_date = request.GET.get('end_date')
+
+    if start_date:
+        filtered_company_data = filter_company_data_by_date(company, start_date, end_date)
+        context['floorsheet'] = filtered_company_data.order_by('-updated_at')
+        context['start_date'] = start_date
+        context['end_date'] = end_date
+    else:
+        context['floorsheet'] = company.company_data.all().order_by('-updated_at')
 
     return render(request, 'scrapper/detail.html', context=context)
 
@@ -51,22 +70,20 @@ def company_detail(request):
             messages.error(request, "No data found")
         finally:
             context['company_data'] = company_data
-
+    
+    context['floorsheet'] = company.company_data.all().order_by('-updated_at')
     return render(request, 'scrapper/detail.html', context=context)
 
 
 def scrap_from_nepse(request, company_id):
     if request.method == 'POST':
-        today = timezone.now().date()
+        today = timezone.now()
         company = Company.objects.get(id=company_id)
 
         try:
-            company_data = CompanyData.objects.get(company=company, created_at__date=today)
+            company_data = CompanyData.objects.get(company=company, created_at__date=today.date())
         except CompanyData.DoesNotExist:
-            print("Company data is not of today")
-            company_data = CompanyData(company=company)
-        else:
-            print("Company data is of today")
+            company_data = CompanyData(company=company, created_at=today, updated_at=today)
 
         nepse_url = company.urls.nepse_url     # the urls should be initialized from the company update page
 
@@ -106,20 +123,20 @@ def scrap_from_nepse(request, company_id):
             company_data.market_capitalization = data_dict['Market Capitalization']
             company_data.save()
             messages.success(request, "Success: Data updated")
-
-    return redirect('scrapper:company_detail')
+    redirect_url = request.META.get('HTTP_REFERER')
+    return redirect(redirect_url)
 
 
 def scrap_from_mero_lagani(request, company_id):
     if request.method == 'POST':
-        today = timezone.now().date()
+        today = timezone.now()
         company = Company.objects.get(id=company_id)
 
         try:
-            company_data = CompanyData.objects.get(company=company, created_at__date=today)
+            company_data = CompanyData.objects.get(company=company, created_at__date=today.date())
         except CompanyData.DoesNotExist:
             print("Company data is not of today")
-            company_data = CompanyData(company=company)
+            company_data = CompanyData(company=company, created_at=today, updated_at=today)
         else:
             print("Company data is of today")
         
@@ -146,19 +163,19 @@ def scrap_from_mero_lagani(request, company_id):
         company_data.total_paid_up_value = table_data['Total Paidup Value']
         company_data.save()
         messages.success(request, "Success: Data updated")
-
-    return redirect('scrapper:company_detail')
+    redirect_url = request.META.get('HTTP_REFERER')
+    return redirect(redirect_url)
     
 def scrap_from_share_sansar(request, company_id):
     if request.method == 'POST':
-        today = timezone.now().date()
+        today = timezone.now()
         company = Company.objects.get(id=company_id)
 
         try:
-            company_data = CompanyData.objects.get(company=company, created_at__date=today)
+            company_data = CompanyData.objects.get(company=company, created_at__date=today.date())
         except CompanyData.DoesNotExist:
             print("Company data is not of today")
-            company_data = CompanyData(company=company)
+            company_data = CompanyData(company=company, created_at=today, updated_at=today)
         else:
             print("Company data is of today")
 
@@ -193,6 +210,16 @@ def scrap_from_share_sansar(request, company_id):
         company_data.open_price= scrapped_data['Open']
         company_data.save()
         messages.success(request, "Success: Data updated")
-
-    return redirect('scrapper:company_detail')
+    redirect_url = request.META.get('HTTP_REFERER')
+    return redirect(redirect_url)
+    
+def export_company_data(request, company_data_id):
+    if request.method == 'POST':
+        qs = CompanyData.objects.get(id=company_data_id)
+        dataset = CompanyDataResource().export(qs)
+        format = 'xls'
+        ds = dataset.xls
+        response = HttpResponse(ds, content_type=f'{format}')
+        response['Content-Disposition'] = f'attachment; filename={qs.company.name}.{format}'
+        return response
     

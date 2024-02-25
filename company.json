@@ -1,0 +1,539 @@
+[
+  {
+    "model": "company.category",
+    "pk": 1,
+    "fields": { "name": "Commercial Bank" }
+  },
+  {
+    "model": "company.company",
+    "pk": 1,
+    "fields": {
+      "category": 1,
+      "name": "NMB Bank Limited",
+      "logo": "company/logo/NMB.png",
+      "address": "Kathmandu",
+      "contact_person": "hari",
+      "email": "pramod.dahal@nmb.com.np",
+      "phone": "4246160",
+      "symbol": "nmb",
+      "primary_color": "#0ce2d2",
+      "secondary_color": "#ffffff",
+      "created_at": "2024-02-21T05:22:32.334Z",
+      "updated_at": "2024-02-21T05:22:32.334Z"
+    }
+  },
+  {
+    "model": "company.company",
+    "pk": 2,
+    "fields": {
+      "category": 1,
+      "name": "Agricultural Development Bank Limited",
+      "logo": "company/logo/adbl_.png",
+      "address": "Kathmandu",
+      "contact_person": "GM",
+      "email": "cs@adbl.gov.np",
+      "phone": "4246160",
+      "symbol": "adbl",
+      "primary_color": "#0f35f0",
+      "secondary_color": "#fa0000",
+      "created_at": "2024-02-21T05:22:32.334Z",
+      "updated_at": "2024-02-21T10:21:51.417Z"
+    }
+  },
+  {
+    "model": "company.company",
+    "pk": 3,
+    "fields": {
+      "category": 1,
+      "name": "NIC Asia Bank Ltd.",
+      "logo": "company/logo/nic.jpg",
+      "address": "Kathmandu",
+      "contact_person": "Ram",
+      "email": "nica.nots@nicasiabank.com",
+      "phone": "21521929",
+      "symbol": "nica",
+      "primary_color": "#e40c0c",
+      "secondary_color": "#ffffff",
+      "created_at": "2024-02-21T05:22:32.334Z",
+      "updated_at": "2024-02-21T10:22:23.367Z"
+    }
+  },
+  {
+    "model": "company.company",
+    "pk": 4,
+    "fields": {
+      "category": 1,
+      "name": "Global IME Bank Limited",
+      "logo": "company/logo/global.png",
+      "address": "Kathmandu",
+      "contact_person": "Bishnu Prasad Baskota",
+      "email": "nlisting@gibl.com.np",
+      "phone": "4002506",
+      "symbol": "gbime",
+      "primary_color": "#0ce2d2",
+      "secondary_color": "#ffffff",
+      "created_at": "2024-02-21T05:22:32.334Z",
+      "updated_at": "2024-02-21T10:08:24.658Z"
+    }
+  },
+  {
+    "model": "company.companyurls",
+    "pk": 2,
+    "fields": {
+      "company": 2,
+      "nepse_url": "https://nepalstock.com/company/detail/397",
+      "mero_lagani_url": "https://merolagani.com/CompanyDetail.aspx?symbol=ADBL",
+      "share_sansar_url": "https://www.sharesansar.com/company/adbl"
+    }
+  },
+  {
+    "model": "company.companyurls",
+    "pk": 3,
+    "fields": {
+      "company": 3,
+      "nepse_url": "https://nepalstock.com/company/detail/139",
+      "mero_lagani_url": "https://merolagani.com/CompanyDetail.aspx?symbol=nica",
+      "share_sansar_url": "https://www.sharesansar.com/company/nica"
+    }
+  },
+  {
+    "model": "company.companyurls",
+    "pk": 4,
+    "fields": {
+      "company": 4,
+      "nepse_url": "https://nepalstock.com/company/detail/341",
+      "mero_lagani_url": "https://merolagani.com/CompanyDetail.aspx?symbol=gbime",
+      "share_sansar_url": "https://www.sharesansar.com/company/gbime"
+    }
+  },
+  {
+    "model": "company.companyurls",
+    "pk": 5,
+    "fields": {
+      "company": 1,
+      "nepse_url": "https://nepalstock.com/company/detail/238",
+      "mero_lagani_url": "https://merolagani.com/CompanyDetail.aspx?symbol=NMB",
+      "share_sansar_url": "https://www.sharesansar.com/company/nmb"
+    }
+  },
+  {
+    "model": "company.companydata",
+    "pk": 3,
+    "fields": {
+      "last_scrapped_from": "Nepse",
+      "company": 3,
+      "last_traded_price": "215.20",
+      "total_traded_quantity": "320",
+      "total_trades": "6100",
+      "previous_day_close_price": "517.50",
+      "high_price_low_price": "480",
+      "week_high_week_low": "480",
+      "open_price": "889",
+      "close_price": "205.20",
+      "total_listed_shares": "1000000",
+      "total_paid_up_value": "2000000",
+      "market_capitalization": "1919182",
+      "created_at": "2024-02-20T07:53:00Z",
+      "updated_at": "2024-02-20T07:53:00Z"
+    }
+  },
+  {
+    "model": "company.companydata",
+    "pk": 4,
+    "fields": {
+      "last_scrapped_from": "Nepse",
+      "company": 3,
+      "last_traded_price": "165.20",
+      "total_traded_quantity": "320",
+      "total_trades": "6100",
+      "previous_day_close_price": "517.50",
+      "high_price_low_price": "480",
+      "week_high_week_low": "480",
+      "open_price": "889",
+      "close_price": "165.20",
+      "total_listed_shares": "1000000",
+      "total_paid_up_value": "2000000",
+      "market_capitalization": "1919182",
+      "created_at": "2024-02-19T07:53:00Z",
+      "updated_at": "2024-02-19T07:53:00Z"
+    }
+  },
+  {
+    "model": "company.companydata",
+    "pk": 5,
+    "fields": {
+      "last_scrapped_from": "Nepse",
+      "company": 3,
+      "last_traded_price": "189.20",
+      "total_traded_quantity": "320",
+      "total_trades": "6100",
+      "previous_day_close_price": "517.50",
+      "high_price_low_price": "480",
+      "week_high_week_low": "480",
+      "open_price": "889",
+      "close_price": "189.20",
+      "total_listed_shares": "1000000",
+      "total_paid_up_value": "2000000",
+      "market_capitalization": "1919182",
+      "created_at": "2024-02-18T07:53:00Z",
+      "updated_at": "2024-02-18T07:53:00Z"
+    }
+  },
+  {
+    "model": "company.companydata",
+    "pk": 6,
+    "fields": {
+      "last_scrapped_from": "Nepse",
+      "company": 3,
+      "last_traded_price": "190.20",
+      "total_traded_quantity": "320",
+      "total_trades": "6100",
+      "previous_day_close_price": "517.50",
+      "high_price_low_price": "480",
+      "week_high_week_low": "480",
+      "open_price": "889",
+      "close_price": "190.20",
+      "total_listed_shares": "1000000",
+      "total_paid_up_value": "2000000",
+      "market_capitalization": "1919182",
+      "created_at": "2024-02-17T07:53:00Z",
+      "updated_at": "2024-02-17T07:53:00Z"
+    }
+  },
+  {
+    "model": "company.companydata",
+    "pk": 7,
+    "fields": {
+      "last_scrapped_from": "Nepse",
+      "company": 3,
+      "last_traded_price": "195.20",
+      "total_traded_quantity": "320",
+      "total_trades": "6100",
+      "previous_day_close_price": "517.50",
+      "high_price_low_price": "480",
+      "week_high_week_low": "480",
+      "open_price": "889",
+      "close_price": "195.20",
+      "total_listed_shares": "1000000",
+      "total_paid_up_value": "2000000",
+      "market_capitalization": "1919182",
+      "created_at": "2024-02-16T07:53:00Z",
+      "updated_at": "2024-02-16T07:53:00Z"
+    }
+  },
+  {
+    "model": "company.companydata",
+    "pk": 9,
+    "fields": {
+      "last_scrapped_from": "Nepse",
+      "company": 2,
+      "last_traded_price": "180.20",
+      "total_traded_quantity": "320",
+      "total_trades": "6100",
+      "previous_day_close_price": "517.50",
+      "high_price_low_price": "480",
+      "week_high_week_low": "480",
+      "open_price": "889",
+      "close_price": "195.20",
+      "total_listed_shares": "1000000",
+      "total_paid_up_value": "2000000",
+      "market_capitalization": "1919182",
+      "created_at": "2024-02-20T07:53:00Z",
+      "updated_at": "2024-02-20T07:53:00Z"
+    }
+  },
+  {
+    "model": "company.companydata",
+    "pk": 10,
+    "fields": {
+      "last_scrapped_from": "Nepse",
+      "company": 2,
+      "last_traded_price": "165.20",
+      "total_traded_quantity": "320",
+      "total_trades": "6100",
+      "previous_day_close_price": "517.50",
+      "high_price_low_price": "480",
+      "week_high_week_low": "480",
+      "open_price": "889",
+      "close_price": "165.20",
+      "total_listed_shares": "1000000",
+      "total_paid_up_value": "2000000",
+      "market_capitalization": "1919182",
+      "created_at": "2024-02-19T07:53:00Z",
+      "updated_at": "2024-02-19T07:53:00Z"
+    }
+  },
+  {
+    "model": "company.companydata",
+    "pk": 11,
+    "fields": {
+      "last_scrapped_from": "Nepse",
+      "company": 2,
+      "last_traded_price": "189.20",
+      "total_traded_quantity": "320",
+      "total_trades": "6100",
+      "previous_day_close_price": "517.50",
+      "high_price_low_price": "480",
+      "week_high_week_low": "480",
+      "open_price": "889",
+      "close_price": "189.20",
+      "total_listed_shares": "1000000",
+      "total_paid_up_value": "2000000",
+      "market_capitalization": "1919182",
+      "created_at": "2024-02-18T07:53:00Z",
+      "updated_at": "2024-02-18T07:53:00Z"
+    }
+  },
+  {
+    "model": "company.companydata",
+    "pk": 12,
+    "fields": {
+      "last_scrapped_from": "Nepse",
+      "company": 2,
+      "last_traded_price": "190.20",
+      "total_traded_quantity": "320",
+      "total_trades": "6100",
+      "previous_day_close_price": "517.50",
+      "high_price_low_price": "480",
+      "week_high_week_low": "480",
+      "open_price": "889",
+      "close_price": "190.20",
+      "total_listed_shares": "1000000",
+      "total_paid_up_value": "2000000",
+      "market_capitalization": "1919182",
+      "created_at": "2024-02-17T07:53:00Z",
+      "updated_at": "2024-02-17T07:53:00Z"
+    }
+  },
+  {
+    "model": "company.companydata",
+    "pk": 13,
+    "fields": {
+      "last_scrapped_from": "Nepse",
+      "company": 2,
+      "last_traded_price": "195.20",
+      "total_traded_quantity": "320",
+      "total_trades": "6100",
+      "previous_day_close_price": "517.50",
+      "high_price_low_price": "480",
+      "week_high_week_low": "480",
+      "open_price": "889",
+      "close_price": "195.20",
+      "total_listed_shares": "1000000",
+      "total_paid_up_value": "2000000",
+      "market_capitalization": "1919182",
+      "created_at": "2024-02-16T07:53:00Z",
+      "updated_at": "2024-02-16T07:53:00Z"
+    }
+  },
+  {
+    "model": "company.companydata",
+    "pk": 15,
+    "fields": {
+      "last_scrapped_from": "Nepse",
+      "company": 1,
+      "last_traded_price": "205.20",
+      "total_traded_quantity": "320",
+      "total_trades": "6100",
+      "previous_day_close_price": "517.50",
+      "high_price_low_price": "480",
+      "week_high_week_low": "480",
+      "open_price": "889",
+      "close_price": "195.20",
+      "total_listed_shares": "1000000",
+      "total_paid_up_value": "2000000",
+      "market_capitalization": "1919182",
+      "created_at": "2024-02-20T07:53:00Z",
+      "updated_at": "2024-02-20T07:53:00Z"
+    }
+  },
+  {
+    "model": "company.companydata",
+    "pk": 16,
+    "fields": {
+      "last_scrapped_from": "Nepse",
+      "company": 1,
+      "last_traded_price": "165.20",
+      "total_traded_quantity": "320",
+      "total_trades": "6100",
+      "previous_day_close_price": "517.50",
+      "high_price_low_price": "480",
+      "week_high_week_low": "480",
+      "open_price": "889",
+      "close_price": "165.20",
+      "total_listed_shares": "1000000",
+      "total_paid_up_value": "2000000",
+      "market_capitalization": "1919182",
+      "created_at": "2024-02-19T07:53:00Z",
+      "updated_at": "2024-02-19T07:53:00Z"
+    }
+  },
+  {
+    "model": "company.companydata",
+    "pk": 17,
+    "fields": {
+      "last_scrapped_from": "Nepse",
+      "company": 1,
+      "last_traded_price": "189.20",
+      "total_traded_quantity": "320",
+      "total_trades": "6100",
+      "previous_day_close_price": "517.50",
+      "high_price_low_price": "480",
+      "week_high_week_low": "480",
+      "open_price": "889",
+      "close_price": "189.20",
+      "total_listed_shares": "1000000",
+      "total_paid_up_value": "2000000",
+      "market_capitalization": "1919182",
+      "created_at": "2024-02-18T07:53:00Z",
+      "updated_at": "2024-02-18T07:53:00Z"
+    }
+  },
+  {
+    "model": "company.companydata",
+    "pk": 18,
+    "fields": {
+      "last_scrapped_from": "Nepse",
+      "company": 1,
+      "last_traded_price": "190.20",
+      "total_traded_quantity": "320",
+      "total_trades": "6100",
+      "previous_day_close_price": "517.50",
+      "high_price_low_price": "480",
+      "week_high_week_low": "480",
+      "open_price": "889",
+      "close_price": "190.20",
+      "total_listed_shares": "1000000",
+      "total_paid_up_value": "2000000",
+      "market_capitalization": "1919182",
+      "created_at": "2024-02-17T07:53:00Z",
+      "updated_at": "2024-02-17T07:53:00Z"
+    }
+  },
+  {
+    "model": "company.companydata",
+    "pk": 19,
+    "fields": {
+      "last_scrapped_from": "Nepse",
+      "company": 1,
+      "last_traded_price": "195.20",
+      "total_traded_quantity": "320",
+      "total_trades": "6100",
+      "previous_day_close_price": "517.50",
+      "high_price_low_price": "480",
+      "week_high_week_low": "480",
+      "open_price": "889",
+      "close_price": "195.20",
+      "total_listed_shares": "1000000",
+      "total_paid_up_value": "2000000",
+      "market_capitalization": "1919182",
+      "created_at": "2024-02-16T07:53:00Z",
+      "updated_at": "2024-02-16T07:53:00Z"
+    }
+  },
+  {
+    "model": "company.companydata",
+    "pk": 20,
+    "fields": {
+      "last_scrapped_from": "Nepse",
+      "company": 4,
+      "last_traded_price": "195.20",
+      "total_traded_quantity": "320",
+      "total_trades": "6100",
+      "previous_day_close_price": "517.50",
+      "high_price_low_price": "480",
+      "week_high_week_low": "480",
+      "open_price": "889",
+      "close_price": "195.20",
+      "total_listed_shares": "1000000",
+      "total_paid_up_value": "2000000",
+      "market_capitalization": "1919182",
+      "created_at": "2024-02-20T07:53:00Z",
+      "updated_at": "2024-02-20T07:53:00Z"
+    }
+  },
+  {
+    "model": "company.companydata",
+    "pk": 21,
+    "fields": {
+      "last_scrapped_from": "Nepse",
+      "company": 4,
+      "last_traded_price": "165.20",
+      "total_traded_quantity": "320",
+      "total_trades": "6100",
+      "previous_day_close_price": "517.50",
+      "high_price_low_price": "480",
+      "week_high_week_low": "480",
+      "open_price": "889",
+      "close_price": "165.20",
+      "total_listed_shares": "1000000",
+      "total_paid_up_value": "2000000",
+      "market_capitalization": "1919182",
+      "created_at": "2024-02-19T07:53:00Z",
+      "updated_at": "2024-02-19T07:53:00Z"
+    }
+  },
+  {
+    "model": "company.companydata",
+    "pk": 22,
+    "fields": {
+      "last_scrapped_from": "Nepse",
+      "company": 4,
+      "last_traded_price": "189.20",
+      "total_traded_quantity": "320",
+      "total_trades": "6100",
+      "previous_day_close_price": "517.50",
+      "high_price_low_price": "480",
+      "week_high_week_low": "480",
+      "open_price": "889",
+      "close_price": "189.20",
+      "total_listed_shares": "1000000",
+      "total_paid_up_value": "2000000",
+      "market_capitalization": "1919182",
+      "created_at": "2024-02-18T07:53:00Z",
+      "updated_at": "2024-02-18T07:53:00Z"
+    }
+  },
+  {
+    "model": "company.companydata",
+    "pk": 23,
+    "fields": {
+      "last_scrapped_from": "Nepse",
+      "company": 4,
+      "last_traded_price": "190.20",
+      "total_traded_quantity": "320",
+      "total_trades": "6100",
+      "previous_day_close_price": "517.50",
+      "high_price_low_price": "480",
+      "week_high_week_low": "480",
+      "open_price": "889",
+      "close_price": "190.20",
+      "total_listed_shares": "1000000",
+      "total_paid_up_value": "2000000",
+      "market_capitalization": "1919182",
+      "created_at": "2024-02-17T07:53:00Z",
+      "updated_at": "2024-02-17T07:53:00Z"
+    }
+  },
+  {
+    "model": "company.companydata",
+    "pk": 24,
+    "fields": {
+      "last_scrapped_from": "Nepse",
+      "company": 4,
+      "last_traded_price": "195.20",
+      "total_traded_quantity": "320",
+      "total_trades": "6100",
+      "previous_day_close_price": "517.50",
+      "high_price_low_price": "480",
+      "week_high_week_low": "480",
+      "open_price": "889",
+      "close_price": "195.20",
+      "total_listed_shares": "1000000",
+      "total_paid_up_value": "2000000",
+      "market_capitalization": "1919182",
+      "created_at": "2024-02-16T07:53:00Z",
+      "updated_at": "2024-02-16T07:53:00Z"
+    }
+  }
+]

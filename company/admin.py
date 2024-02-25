@@ -1,10 +1,10 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import Company, CompanyData, CompanyUrls, BoardOfDirector
+from .models import AGM, Company, CompanyData, CompanyUrls, BoardOfDirector
 # Register your models here.
 
 class CompanyAdmin(admin.ModelAdmin):
-    list_display = ('logo_display', 'name', 'symbol', 'created_at', 'updated_at')
+    list_display = ('id','logo_display', 'name', 'symbol', 'created_at', 'updated_at')
     search_fields = ['name','symbol']
     fieldsets = (
         ('General Information', {
@@ -29,7 +29,7 @@ class CompanyAdmin(admin.ModelAdmin):
     logo_display.short_description = 'Logo'
 
 class CompanyDataAdmin(admin.ModelAdmin):
-    list_display = ('company_name', 'last_scrapped_from', 'created_at', 'updated_at')
+    list_display = ('id','company_name', 'last_scrapped_from', 'created_at', 'updated_at')
     search_fields = ['company_name', 'last_scrapped_from']
     list_filter = [ 'last_scrapped_from', 'created_at', 'updated_at']
     sortable_by = ['company_name', 'last_scrapped_from', 'created_at', 'updated_at']
@@ -43,3 +43,4 @@ admin.site.register(Company, CompanyAdmin)
 admin.site.register(CompanyUrls)
 admin.site.register(CompanyData, CompanyDataAdmin)
 admin.site.register(BoardOfDirector, BoardOfDirectorAdmin)
+admin.site.register(AGM)
